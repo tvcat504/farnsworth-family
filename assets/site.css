@@ -1,0 +1,107 @@
+/* Farnsworth Families — shared look. Black, gold and red. */
+:root {
+  --black: #1A1818;
+  --black-deep: #0E0D0D;
+  --gold: #E3BF79;
+  --gold-mid: #AE8243;
+  --gold-dark: #9F743E;
+  --gold-soft: #EFDCB0;
+  --pale: #F7EBD0;
+  --cream: #FFFDF7;
+  --red: #DD001B;
+  --ink: #1A1818;
+  --ink-soft: #4A3F35;
+  --ok: #2f6b3a;
+  --radius: 22px;
+  --shadow: 0 10px 30px rgba(26, 24, 24, .16);
+  --serif: 'Playfair Display', Georgia, serif;
+  --display: 'Cinzel', Georgia, serif;
+  --sans: 'Montserrat', Arial, sans-serif;
+  --script: 'Pinyon Script', 'Brush Script MT', cursive;
+}
+
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--gold);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 19px;
+  line-height: 1.5;
+  min-height: 100vh;
+  border: 10px solid var(--black);
+}
+img { max-width: 100%; display: block; }
+a { color: var(--black); }
+button { font: inherit; }
+
+.wrap { max-width: 1040px; margin: 0 auto; padding: 22px 16px 60px; }
+
+.script { font-family: var(--script); font-weight: 400; color: var(--black); }
+.serif  { font-family: var(--serif); }
+
+h1, h2, h3 { font-family: var(--serif); color: var(--black); font-weight: 700; margin: 0; line-height: 1.15; font-variant-numeric: lining-nums; }
+h1 { font-size: clamp(34px, 6vw, 54px); }
+h2 { font-size: clamp(27px, 4.4vw, 38px); }
+h3 { font-size: 25px; }
+
+/* The logo lockup */
+.brand { display: flex; flex-direction: column; align-items: center; gap: 14px; text-decoration: none; color: var(--black); padding: 10px 0 22px; }
+.brand img { width: 104px; height: 104px; filter: drop-shadow(0 6px 10px rgba(26,24,24,.35)) drop-shadow(0 2px 2px rgba(26,24,24,.25)); }
+.brand .words { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+.brand .wm { font-family: var(--display); font-weight: 700; font-size: clamp(36px, 8vw, 62px); line-height: 1; letter-spacing: .06em; padding-left: .06em; }
+.brand .tag { display: flex; align-items: center; gap: 12px; font-weight: 700; font-size: clamp(12px, 2.4vw, 15px); letter-spacing: .36em; padding-left: .36em; }
+.brand .tag::before, .brand .tag::after { content: ''; width: clamp(28px, 7vw, 64px); height: 2px; background: var(--red); }
+.brand .dia { width: 8px; height: 8px; background: var(--red); transform: rotate(45deg); flex: none; }
+.brand.small { flex-direction: row; gap: 12px; padding: 6px 0 16px; }
+.brand.small img { width: 56px; height: 56px; }
+.brand.small .words { align-items: flex-start; gap: 4px; }
+.brand.small .wm { font-size: clamp(22px, 5vw, 30px); }
+.brand.small .tag { font-size: 11px; gap: 8px; }
+.brand.small .tag::before { display: none; }
+.brand.small .tag::after { width: 36px; }
+
+.pill {
+  display: inline-block; background: var(--black); color: var(--gold);
+  font-weight: 700; border-radius: 999px; padding: 8px 18px; font-size: 17px;
+}
+
+.card {
+  background: var(--pale); border: 3px solid var(--black); border-radius: var(--radius);
+  padding: 22px; box-shadow: var(--shadow);
+}
+.card.dark { background: var(--black); color: var(--pale); border-color: var(--black); }
+.card.dark h2, .card.dark h3 { color: var(--gold); }
+
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  min-height: 60px; padding: 14px 26px; border-radius: 999px; border: 3px solid var(--black);
+  background: var(--black); color: var(--gold); font-weight: 700; font-size: 19px;
+  text-decoration: none; cursor: pointer; text-align: center;
+  transition: transform .08s ease, background .15s ease;
+}
+.btn:hover { background: var(--black-deep); }
+.btn:active { transform: scale(.98); }
+.btn.ghost { background: var(--pale); color: var(--black); }
+.btn.ghost:hover { background: var(--cream); }
+.btn.block { width: 100%; }
+.btn:focus-visible, button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visible {
+  outline: 4px solid var(--red); outline-offset: 3px;
+}
+
+.frame { border: 6px solid var(--black); border-radius: var(--radius); overflow: hidden; background: var(--black); box-shadow: var(--shadow); }
+
+.muted { color: var(--ink-soft); }
+.center { text-align: center; }
+.stack > * + * { margin-top: 16px; }
+.row { display: flex; gap: 14px; flex-wrap: wrap; }
+
+.foot { text-align: center; margin-top: 40px; font-size: 16px; color: var(--ink-soft); }
+.foot a { font-weight: 700; }
+
+@media (max-width: 600px) {
+  body { border-width: 6px; font-size: 18px; }
+  .card { padding: 18px; }
+  .brand img { width: 88px; height: 88px; }
+}

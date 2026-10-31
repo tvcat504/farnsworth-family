@@ -1,0 +1,398 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Thanksgiving 2026 · Farnsworth Families</title>
+<link rel="icon" type="image/svg+xml" href="../assets/badge.svg">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<meta name="theme-color" content="#1A1818">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Montserrat:wght@400;600;700;800&family=Pinyon+Script&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/site.css">
+<style>
+  .back { margin-bottom: 16px; }
+  .hero { display: grid; gap: 18px; }
+  .when { display: grid; gap: 12px; }
+  .when .big { font-family: var(--serif); font-size: clamp(26px, 4.4vw, 36px); color: var(--black); font-weight: 900; line-height: 1.15; }
+  .tally { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px; }
+  .tally div { background: var(--black); color: var(--pale); border-radius: 16px; padding: 12px; text-align: center; }
+  .tally b { display: block; font-family: var(--serif); font-size: 38px; color: var(--gold); line-height: 1; }
+  .tally span { font-size: 15px; }
+
+  .fam-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 12px; }
+  .fam {
+    display: flex; flex-direction: column; align-items: flex-start; gap: 6px; text-align: left;
+    background: var(--cream); border: 3px solid var(--black); border-radius: 18px; padding: 16px 18px;
+    cursor: pointer; min-height: 84px; color: var(--ink);
+  }
+  .fam:hover { background: #fff; }
+  .fam .nm { font-family: var(--serif); font-size: 24px; font-weight: 700; color: var(--black); line-height: 1.1; }
+  .chip { font-size: 15px; font-weight: 800; border-radius: 999px; padding: 3px 12px; background: var(--gold); color: var(--ink); }
+  .chip.yes { background: var(--ok); color: #fff; }
+  .chip.maybe { background: var(--gold); color: var(--ink); }
+  .chip.no { background: #8b8b8b; color: #fff; }
+  .chip.todo { background: var(--black); color: var(--gold); }
+
+  .slide-img { width: 100%; aspect-ratio: 16/9; object-fit: cover; background: var(--gold-soft); }
+  .slide-btn { padding: 0; border: 0; background: none; cursor: zoom-in; width: 100%; }
+
+  .q { font-weight: 800; font-size: 21px; margin: 0 0 10px; }
+  .q small { font-weight: 600; color: var(--ink-soft); font-size: 16px; }
+  .choices { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  .choice {
+    min-height: 68px; border-radius: 18px; border: 3px solid var(--black); background: var(--cream);
+    color: var(--black); font-weight: 800; font-size: 20px; cursor: pointer; padding: 8px;
+  }
+  .choice[aria-pressed="true"] { background: var(--black); color: var(--gold); }
+  .counts { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .counter { background: var(--cream); border: 3px solid var(--black); border-radius: 18px; padding: 12px; text-align: center; }
+  .counter .lbl { font-weight: 800; }
+  .counter .ctl { display: flex; align-items: center; justify-content: center; gap: 14px; margin-top: 6px; }
+  .counter button {
+    width: 58px; height: 58px; border-radius: 50%; border: 3px solid var(--black); background: var(--pale);
+    color: var(--black); font-size: 32px; font-weight: 800; line-height: 1; cursor: pointer;
+  }
+  .counter output { font-family: var(--serif); font-size: 44px; font-weight: 700; color: var(--black); min-width: 46px; }
+  label.f { display: block; }
+  label.f span { display: block; font-weight: 800; margin-bottom: 6px; font-size: 20px; }
+  label.f em { display: block; font-style: normal; color: var(--ink-soft); font-size: 16px; margin: -2px 0 6px; }
+  input[type=text], textarea {
+    width: 100%; font: inherit; font-size: 20px; padding: 14px 16px; border-radius: 14px;
+    border: 3px solid var(--black); background: var(--cream); color: var(--ink);
+  }
+  textarea { min-height: 110px; resize: vertical; }
+  .note { background: var(--gold-soft); border-left: 6px solid var(--red); border-radius: 12px; padding: 12px 14px; font-size: 17px; }
+  .err { background: #fde8e8; border: 3px solid #a3122a; color: #6b0b1b; border-radius: 14px; padding: 12px 14px; font-weight: 700; }
+  .thanks { text-align: center; }
+  .thanks .script { font-size: clamp(48px, 9vw, 76px); line-height: 1; }
+
+  .show { position: relative; }
+  .show .nav { display: grid; grid-template-columns: 1fr auto 1fr; gap: 10px; align-items: center; margin-top: 12px; }
+  .show .count { font-weight: 800; text-align: center; min-width: 90px; }
+
+  .loading { text-align: center; padding: 60px 10px; font-size: 22px; }
+  .dots::after { content: '…'; animation: dots 1.2s steps(4) infinite; display: inline-block; width: 1.2em; text-align: left; overflow: hidden; vertical-align: bottom; }
+  @keyframes dots { from { width: 0 } to { width: 1.2em } }
+  [hidden] { display: none !important; }
+  .show .nav .btn { padding: 12px 18px; white-space: nowrap; }
+  .tally b, .counter output, .when .big { font-variant-numeric: lining-nums; }
+  @media (max-width: 520px) {
+    .counts { grid-template-columns: 1fr; }
+    .choices { grid-template-columns: 1fr; }
+    .fam-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<header class="wrap" style="padding-bottom:0">
+  <a class="brand" href="../" aria-label="Farnsworth Families home">
+    <img src="../assets/badge.svg" alt="" width="104" height="104">
+    <span class="words"><span class="wm">FARNSWORTH</span><span class="tag"><span class="dia"></span>FAMILIES<span class="dia"></span></span></span>
+  </a>
+</header>
+<main class="wrap" id="app" style="padding-top:0">
+  <div class="loading">Setting the table<span class="dots"></span></div>
+</main>
+
+<script src="../assets/config.js"></script>
+<script>
+(function () {
+  'use strict';
+  const API = (window.FF && window.FF.api) || '';
+  const PDF = 'https://docs.google.com/presentation/d/1indQQDIlo-Ls0occzrnEbnLbzMSdOVAcVYnnuaMUz84/export/pdf';
+  const app = document.getElementById('app');
+  let DATA = null;
+  let SHOW_I = 0;
+
+  // ---------- tiny helpers
+  const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const qs = () => new URLSearchParams(location.search);
+  function go(params) {
+    const u = new URL(location.href);
+    u.search = '';
+    Object.keys(params || {}).forEach(k => params[k] != null && u.searchParams.set(k, params[k]));
+    history.pushState({}, '', u);
+    render();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+  window.addEventListener('popstate', render);
+
+  function parseCount(head, word) {
+    const m = new RegExp('(\\d+)\\s+' + word).exec(head || '');
+    return m ? parseInt(m[1], 10) : 0;
+  }
+  function chip(r) {
+    if (!r) return '<span class="chip todo">Tap to RSVP</span>';
+    if (r.coming === 'yes') return '<span class="chip yes">✓ Coming</span>';
+    if (r.coming === 'maybe') return '<span class="chip maybe">Maybe</span>';
+    return '<span class="chip no">Can’t make it</span>';
+  }
+  function people(a, k) {
+    const p = [];
+    p.push(a + (a === 1 ? ' adult' : ' adults'));
+    if (k) p.push(k + (k === 1 ? ' kid' : ' kids'));
+    return p.join(' · ');
+  }
+  function when(iso) {
+    try { return new Date(iso).toLocaleString(undefined, { weekday: 'short', month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' }); }
+    catch (e) { return ''; }
+  }
+  function calLink(ev) {
+    const p = new URLSearchParams({
+      action: 'TEMPLATE',
+      text: 'Farnsworth Family Thanksgiving',
+      dates: '20261126T130000/20261126T190000',
+      ctz: 'America/Chicago',
+      location: ev.address,
+      details: 'RSVP and see everyone’s dishes: ' + location.origin + location.pathname,
+    });
+    return 'https://calendar.google.com/calendar/render?' + p.toString();
+  }
+
+  // ---------- data
+  async function load() {
+    if (!API) { showError('The RSVP page isn’t switched on yet. Please check back soon, or call or text Cat.'); return; }
+    try {
+      const r = await fetch(API, { cache: 'no-store' });
+      const j = await r.json();
+      if (!j.ok) throw new Error(j.error || 'load failed');
+      DATA = j.data;
+      render();
+    } catch (e) {
+      showError('We couldn’t load the RSVP list just now. Please refresh the page in a minute, or call or text Cat at <a href="tel:+15044167032">(504) 416-7032</a>.');
+    }
+  }
+  function showError(html) {
+    app.innerHTML = '<div class="err">' + html + '</div>';
+  }
+
+  // ---------- views
+  function render() {
+    if (!DATA) return;
+    const p = qs();
+    const h = p.get('h');
+    if (p.get('show') != null) return renderShow(parseInt(p.get('show'), 10) || 0);
+    if (h) {
+      const fam = DATA.households.find(x => x.id === h && !x.host);
+      if (fam) return renderFamily(fam, p.get('done') === '1');
+    }
+    renderHome();
+  }
+
+  function renderHome() {
+    const ev = DATA.event, t = DATA.totals;
+    const cover = DATA.slides.find(s => s.n === 1);
+    const fams = DATA.households.filter(x => !x.host);
+    document.title = 'Thanksgiving 2026 · Farnsworth Families';
+    app.innerHTML = `
+      <p class="back"><a class="btn ghost" href="../">← All family events</a></p>
+      <section class="hero">
+        ${cover ? `<div class="frame"><img class="slide-img" src="${esc(cover.img)}" alt="Farnsworth Family Thanksgiving 2026"></div>`
+                : `<h1 class="center">Thanksgiving 2026</h1>`}
+        <div class="card when">
+          <div class="big">${esc(ev.date)} · ${esc(ev.time)}</div>
+          <div><b>${esc(ev.place)}:</b> <a href="https://maps.google.com/?q=${encodeURIComponent(ev.address)}" target="_blank" rel="noopener">${esc(ev.address)}</a></div>
+          <div class="row">
+            <a class="btn ghost" href="${calLink(ev)}" target="_blank" rel="noopener">📅 Add to my calendar</a>
+            <a class="btn ghost" href="?show=0">🎬 Watch the slideshow</a>
+          </div>
+        </div>
+        <div class="tally" aria-label="RSVP count so far">
+          <div><b>${t.coming}</b><span>families coming</span></div>
+          <div><b>${t.adults}</b><span>adults</span></div>
+          <div><b>${t.kids}</b><span>kids</span></div>
+          <div><b>${t.waiting}</b><span>still to hear from</span></div>
+        </div>
+      </section>
+
+      <section style="margin-top:28px" class="stack">
+        <h2>Find your family</h2>
+        <p class="muted" style="margin-top:4px">Tap your family’s name to RSVP. It takes about a minute.</p>
+        <div class="fam-grid">
+          ${fams.map(f => `<button class="fam" data-h="${esc(f.id)}"><span class="nm">${esc(f.name)}</span>${chip(f.reply)}</button>`).join('')}
+        </div>
+      </section>
+
+      <section style="margin-top:28px" class="card stack">
+        <h3>Prefer paper?</h3>
+        <p style="margin:6px 0 0"><a href="${PDF}" target="_blank" rel="noopener"><b>Open the printable PDF</b></a> of the whole slideshow.</p>
+      </section>
+
+      <footer class="foot">Stuck? Call or text Cat at <a href="tel:+15044167032">${esc(ev.phone)}</a> and she’ll fill it in for you.</footer>`;
+    app.querySelectorAll('.fam').forEach(b => b.addEventListener('click', () => go({ h: b.dataset.h })));
+    app.querySelectorAll('a[href^="?show"]').forEach(a => a.addEventListener('click', e => { e.preventDefault(); go({ show: 0 }); }));
+  }
+
+  function renderFamily(f, justSent) {
+    const r = f.reply;
+    document.title = f.name + ' · Thanksgiving 2026';
+    const state = {
+      coming: r ? r.coming : '',
+      adults: r ? r.adults : parseCount(f.headcount, 'Adult'),
+      kids: r ? r.kids : parseCount(f.headcount, 'Kid'),
+    };
+    if (!r && !state.adults) state.adults = 1;
+
+    if (justSent && r) {
+      app.innerHTML = `
+        <p class="back"><button class="btn ghost" id="back">← All families</button></p>
+        <div class="card thanks stack">
+          <div class="script">Thank you!</div>
+          <h2>${esc(f.name)}</h2>
+          <p style="font-size:22px"><b>${r.coming === 'yes' ? 'You’re coming' : r.coming === 'maybe' ? 'You’re a maybe' : 'You can’t make it this year'}</b>${r.coming !== 'no' ? ' · ' + esc(people(r.adults, r.kids)) : ''}</p>
+          ${r.dish ? `<p>Bringing: <b>${esc(r.dish)}</b></p>` : ''}
+          ${r.coming === 'yes' ? '<p class="script" style="font-size:40px">See you on the 26th! 🦃</p>' : r.coming === 'no' ? '<p>We’ll miss you!</p>' : '<p>Just let us know when you know.</p>'}
+          <div class="row" style="justify-content:center">
+            <button class="btn" id="edit">Change my answer</button>
+            <button class="btn ghost" id="home">See all families</button>
+          </div>
+        </div>`;
+      document.getElementById('back').onclick = () => go({});
+      document.getElementById('home').onclick = () => go({});
+      document.getElementById('edit').onclick = () => go({ h: f.id });
+      return;
+    }
+
+    app.innerHTML = `
+      <p class="back"><button class="btn ghost" id="back">← All families</button></p>
+      ${f.img ? `<button class="slide-btn frame" id="zoom" aria-label="Open ${esc(f.name)}’s slide full size"><img class="slide-img" src="${esc(f.img)}" alt="${esc(f.name)}’s slide"></button>` : ''}
+      <form class="card stack" id="form" style="margin-top:18px" novalidate>
+        <h2>RSVP for ${esc(f.name)}</h2>
+        ${r ? `<div class="note">You already told us: <b>${r.coming === 'yes' ? 'Coming' : r.coming === 'maybe' ? 'Maybe' : 'Can’t make it'}</b>${r.coming !== 'no' ? ', ' + esc(people(r.adults, r.kids)) : ''} (${esc(when(r.when))}). Change anything below and tap Send again.</div>` : ''}
+
+        <div>
+          <p class="q">Are you coming?</p>
+          <div class="choices" role="group" aria-label="Are you coming?">
+            <button type="button" class="choice" data-c="yes">Yes! 🦃</button>
+            <button type="button" class="choice" data-c="maybe">Maybe</button>
+            <button type="button" class="choice" data-c="no">Can’t make it</button>
+          </div>
+        </div>
+
+        <div id="howmany">
+          <p class="q">How many? <small>Tap + or –</small></p>
+          <div class="counts">
+            <div class="counter"><div class="lbl">Adults</div><div class="ctl"><button type="button" data-k="adults" data-d="-1" aria-label="One less adult">–</button><output id="adults"></output><button type="button" data-k="adults" data-d="1" aria-label="One more adult">+</button></div></div>
+            <div class="counter"><div class="lbl">Kids</div><div class="ctl"><button type="button" data-k="kids" data-d="-1" aria-label="One less kid">–</button><output id="kids"></output><button type="button" data-k="kids" data-d="1" aria-label="One more kid">+</button></div></div>
+          </div>
+        </div>
+
+        <label class="f" id="dishwrap">
+          <span>What are you bringing?</span>
+          <em>${f.dish ? 'This is what’s on your slide. Change it if it’s wrong.' : 'Type your dish and Cat will add a photo of it.'}</em>
+          <input type="text" id="dish" maxlength="300" autocomplete="off" value="${esc(r && r.dish ? r.dish : f.dish)}">
+        </label>
+
+        <label class="f" id="drinkwrap">
+          <span>Bringing any adult beverages?</span>
+          <input type="text" id="drinks" maxlength="300" autocomplete="off" placeholder="Wine, beer, a holiday cocktail…" value="${esc(r && r.drinks ? r.drinks : '')}">
+        </label>
+
+        <label class="f">
+          <span>Notes for Cat</span>
+          <em>Only Cat sees this. Want a newer photo on your slide? Say so here.</em>
+          <textarea id="notes" maxlength="1500"></textarea>
+        </label>
+
+        <div id="err" class="err" hidden></div>
+        <button class="btn block" id="send" type="submit" style="min-height:72px;font-size:23px">Send my RSVP</button>
+        <p class="center muted" style="font-size:16px;margin-top:8px">Stuck? Call or text Cat at <a href="tel:+15044167032">${esc(DATA.event.phone)}</a>.</p>
+      </form>`;
+
+    const $ = id => document.getElementById(id);
+    $('back').onclick = () => go({});
+    if ($('zoom')) $('zoom').onclick = () => go({ show: f.slide - 1 });
+
+    function paint() {
+      app.querySelectorAll('.choice').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.c === state.coming)));
+      const out = state.coming === 'no';
+      $('howmany').hidden = out; $('dishwrap').hidden = out; $('drinkwrap').hidden = out;
+      $('adults').textContent = state.adults;
+      $('kids').textContent = state.kids;
+    }
+    app.querySelectorAll('.choice').forEach(b => b.addEventListener('click', () => { state.coming = b.dataset.c; $('err').hidden = true; paint(); }));
+    app.querySelectorAll('.counter button').forEach(b => b.addEventListener('click', () => {
+      const k = b.dataset.k;
+      state[k] = Math.max(0, Math.min(30, state[k] + parseInt(b.dataset.d, 10)));
+      paint();
+    }));
+    paint();
+
+    $('form').addEventListener('submit', async e => {
+      e.preventDefault();
+      const err = $('err');
+      if (!state.coming) { err.textContent = 'Please tap Yes, Maybe, or Can’t make it first.'; err.hidden = false; err.scrollIntoView({ block: 'center', behavior: 'smooth' }); return; }
+      if (state.coming !== 'no' && state.adults + state.kids === 0) { err.textContent = 'Please tap + to tell us how many are coming.'; err.hidden = false; return; }
+      err.hidden = true;
+      const btn = $('send');
+      btn.disabled = true; btn.textContent = 'Sending…';
+      try {
+        const res = await fetch(API, {
+          method: 'POST',
+          body: JSON.stringify({
+            id: f.id, coming: state.coming, adults: state.adults, kids: state.kids,
+            dish: $('dish').value, drinks: $('drinks').value, notes: $('notes').value,
+          }),
+        });
+        const j = await res.json();
+        if (!j.ok) throw new Error(j.error || 'Could not save');
+        DATA = j.data;
+        go({ h: f.id, done: 1 });
+      } catch (ex) {
+        err.innerHTML = esc(ex && ex.message && ex.message.length < 140 ? ex.message : 'That didn’t go through.') + ' Please try again, or call or text Cat at <a href="tel:+15044167032">(504) 416-7032</a>.';
+        err.hidden = false;
+        btn.disabled = false; btn.textContent = 'Send my RSVP';
+      }
+    });
+  }
+
+  function renderShow(i) {
+    const s = DATA.slides;
+    if (!s.length) return renderHome();
+    SHOW_I = Math.max(0, Math.min(s.length - 1, i));
+    document.title = 'Slideshow · Thanksgiving 2026';
+    app.innerHTML = `
+      <p class="back"><button class="btn ghost" id="back">← Back</button></p>
+      <div class="show">
+        <div class="frame"><img class="slide-img" id="simg" src="${esc(s[SHOW_I].img)}" alt="Slide ${SHOW_I + 1} of ${s.length}"></div>
+        <div class="nav">
+          <button class="btn ghost" id="prev" aria-label="Previous slide">‹ Prev</button>
+          <div class="count" id="cnt">${SHOW_I + 1} of ${s.length}</div>
+          <button class="btn" id="next" aria-label="Next slide">Next ›</button>
+        </div>
+        <p class="center" id="rsvpwrap" style="margin-top:14px" hidden><button class="btn" id="rsvp"></button></p>
+        <p class="center muted" style="font-size:16px">Tip: swipe, or use the arrow keys.</p>
+      </div>`;
+    const img = document.getElementById('simg');
+    function set(n) {
+      SHOW_I = Math.max(0, Math.min(s.length - 1, n));
+      img.src = s[SHOW_I].img; img.alt = 'Slide ' + (SHOW_I + 1) + ' of ' + s.length;
+      document.getElementById('cnt').textContent = (SHOW_I + 1) + ' of ' + s.length;
+      const nx = s[SHOW_I + 1]; if (nx) { const pre = new Image(); pre.src = nx.img; }
+      const fam = DATA.households.find(x => x.slide === SHOW_I + 1 && !x.host);
+      const w = document.getElementById('rsvpwrap'), rb = document.getElementById('rsvp');
+      w.hidden = !fam;
+      if (fam) { rb.textContent = 'RSVP for ' + fam.name; rb.onclick = () => go({ h: fam.id }); }
+    }
+    document.getElementById('back').onclick = () => history.length > 1 ? history.back() : go({});
+    document.getElementById('prev').onclick = () => set(SHOW_I - 1);
+    document.getElementById('next').onclick = () => set(SHOW_I + 1);
+    let x0 = null;
+    img.addEventListener('touchstart', e => { x0 = e.touches[0].clientX; }, { passive: true });
+    img.addEventListener('touchend', e => { if (x0 == null) return; const dx = e.changedTouches[0].clientX - x0; if (Math.abs(dx) > 40) set(SHOW_I + (dx < 0 ? 1 : -1)); x0 = null; });
+    set(SHOW_I);
+  }
+  document.addEventListener('keydown', e => {
+    if (qs().get('show') == null || !DATA) return;
+    if (e.key === 'ArrowRight') document.getElementById('next') && document.getElementById('next').click();
+    if (e.key === 'ArrowLeft') document.getElementById('prev') && document.getElementById('prev').click();
+  });
+
+  load();
+})();
+</script>
+</body>
+</html>
