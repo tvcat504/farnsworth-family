@@ -10,7 +10,7 @@
 <meta name="theme-color" content="#1A1818">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Montserrat:wght@400;600;700;800&family=Pinyon+Script&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Cinzel:wght@700&family=Montserrat:wght@400;600;700;800&family=Pinyon+Script&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/site.css?v=4">
 <style>
   .lede { text-align: center; max-width: 660px; margin: 0 auto 30px; font-size: 20px; font-weight: 600; }
@@ -56,6 +56,19 @@
   .grid7 .it { display: block; margin-top: 2px; background: var(--well); color: var(--gold); border-radius: 6px; padding: 1px 4px; font-size: 12px; line-height: 1.25; font-weight: 700; }
   .grid7 .it.Birthday { background: var(--redgrad); color: #fff; }
 
+  /* Birthdays: one compact strip instead of a card per person */
+  .bdays { padding: 16px 18px 18px; }
+  .bdays .top { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+  .bdays h3 { font-size: 23px; }
+  .bdays .top p { margin: 0; font-size: 15px; font-weight: 600; }
+  .bpills { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+  .bpill { display: inline-flex; align-items: center; gap: 8px; text-decoration: none; color: var(--ink); background: var(--cream); border: 2px solid transparent; background: var(--cream) padding-box, var(--metal) border-box; border-radius: 999px; padding: 3px 12px 3px 3px; font-size: 15px; font-weight: 700; line-height: 1.2; box-shadow: 0 3px 8px rgba(26,24,24,.18); }
+  .bpill:hover { color: var(--red-deep); }
+  .bpill .d { background: var(--redgrad); color: #fff; font-size: 12px; font-weight: 800; letter-spacing: .04em; border-radius: 999px; padding: 4px 9px; white-space: nowrap; font-variant-numeric: lining-nums; }
+  .bpill.nxt .d { background: var(--black); color: var(--gold); }
+  .bpill .cake { font-size: 14px; }
+  .bdays .more { margin: 12px 0 0; background: none; border: 0; padding: 0; color: var(--red-deep); font-weight: 800; font-size: 16px; cursor: pointer; text-decoration: underline; }
+
   .bday { margin-top: 16px; border-radius: 24px; padding: 22px; display: grid; grid-template-columns: 130px minmax(0, 1fr); gap: 20px; align-items: center; }
   .bday img { width: 130px; height: 130px; object-fit: cover; border-radius: 18px; }
   .bday form { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1.3fr) minmax(0, .8fr) auto; gap: 10px; margin-top: 12px; align-items: end; }
@@ -99,6 +112,51 @@
   .vid h3 { font-size: 21px; margin: 12px 4px 2px; }
   .vid p { margin: 0 4px 4px; font-size: 15px; color: var(--gold-soft); }
 
+  /* Upload */
+  .upload { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 18px; }
+  .up { border-radius: 24px; padding: 22px 24px; display: grid; gap: 10px; align-content: start; }
+  .up[hidden], .bdays[hidden] { display: none; }
+  .up h3 { font-size: 26px; }
+  .up p { margin: 0; font-size: 17px; }
+  .up.well p { color: var(--pale); }
+  .up label.f { display: grid; gap: 4px; font-size: 15px; font-weight: 700; }
+  .up input[type="text"] { font: inherit; font-size: 18px; min-height: 52px; padding: 8px 12px; border-radius: 12px; border: 2px solid var(--gold-dark); background: var(--cream); color: var(--ink); width: 100%; }
+  .up .btn { justify-self: start; margin-top: 4px; cursor: pointer; }
+  .up .btn input { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
+  .up .status { margin: 0; font-weight: 700; min-height: 1.4em; font-size: 16px; }
+  .up .status.ok { color: var(--ok); }
+  .up .status.bad { color: var(--red-deep); }
+  .up .thumbs { display: flex; flex-wrap: wrap; gap: 6px; }
+  .up .thumbs img { width: 64px; height: 64px; object-fit: cover; border-radius: 8px; border: 2px solid var(--gold); }
+
+  /* Chalkboard */
+  .chalk { border-radius: 26px; padding: 14px; background: var(--metal); box-shadow: 0 18px 44px rgba(26,24,24,.4); }
+  .slate { border-radius: 14px; padding: 26px 24px 28px; color: #F3F0E6; position: relative; overflow: hidden; box-shadow: inset 0 0 0 2px #0a0a0a, inset 0 0 60px rgba(0,0,0,.6);
+    background:
+      radial-gradient(ellipse 60% 40% at 20% 10%, rgba(255,255,255,.07), transparent 70%),
+      radial-gradient(ellipse 50% 50% at 85% 90%, rgba(255,255,255,.05), transparent 70%),
+      url("assets/texture.svg"),
+      linear-gradient(160deg, #2b302c 0%, #1d211e 50%, #171a18 100%); }
+  .slate .chalk-title { font-family: 'Caveat', cursive; font-weight: 700; font-size: clamp(40px, 6.5vw, 58px); line-height: 1; text-align: center; color: #FBF7EA; text-shadow: 0 0 1px rgba(255,255,255,.6), 0 0 14px rgba(255,255,255,.18); transform: rotate(-1.5deg); }
+  .slate .chalk-title span { color: var(--gold-hi); }
+  .slate .rule { height: 3px; width: 70%; margin: 10px auto 18px; background: linear-gradient(90deg, transparent, rgba(255,255,255,.55) 20%, rgba(255,255,255,.75) 50%, rgba(255,255,255,.55) 80%, transparent); border-radius: 3px; filter: blur(.3px); }
+  .cform { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr) auto; gap: 10px; align-items: end; }
+  .cform label { display: grid; gap: 4px; font-size: 15px; font-weight: 700; color: var(--gold); }
+  .cform input, .cform textarea { font: inherit; font-size: 18px; min-height: 52px; padding: 10px 12px; border-radius: 12px; border: 2px solid var(--gold-dark); background: rgba(255,255,255,.06); color: #FBF7EA; width: 100%; }
+  .cform textarea { resize: vertical; min-height: 52px; max-height: 220px; font-family: 'Caveat', cursive; font-size: 24px; line-height: 1.2; }
+  .cform input::placeholder, .cform textarea::placeholder { color: rgba(251,247,234,.45); }
+  .cform .btn { min-height: 52px; }
+  .cform .hp { position: absolute; left: -9999px; }
+  .cmsg { margin: 10px 0 0; font-weight: 700; color: var(--gold); min-height: 1.3em; font-size: 16px; }
+  .cmsgs { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px 26px; margin-top: 22px; }
+  .note { font-family: 'Caveat', cursive; font-size: 25px; line-height: 1.15; color: #FBF7EA; text-shadow: 0 0 1px rgba(255,255,255,.35); border-bottom: 2px dashed rgba(255,255,255,.22); padding: 0 2px 12px; overflow-wrap: anywhere; }
+  .note:nth-child(3n+1) { transform: rotate(-.8deg); }
+  .note:nth-child(3n+2) { transform: rotate(.6deg); }
+  .note .who { color: var(--gold-hi); font-weight: 700; }
+  .note .when { font-family: var(--sans); font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: rgba(251,247,234,.55); margin-left: 8px; }
+  .note .txt { margin-top: 2px; white-space: pre-wrap; }
+  .cmsgs .empty { font-family: 'Caveat', cursive; font-size: 26px; color: rgba(251,247,234,.7); grid-column: 1 / -1; text-align: center; }
+
   .heaven { text-align: center; margin-top: 50px; padding: 34px 22px; position: relative; overflow: hidden; }
   .heaven::before { content: ''; position: absolute; inset: -40% -10% auto; height: 120%; background: radial-gradient(ellipse at 50% 0%, rgba(248,228,174,.22), transparent 60%); pointer-events: none; }
   .heaven .script { font-size: clamp(48px, 8vw, 74px); line-height: 1.1; position: relative; }
@@ -118,6 +176,10 @@
     .grid7 .dow { font-size: 10px; letter-spacing: 0; }
     .ev { grid-template-columns: 66px minmax(0, 1fr); gap: 12px; padding: 12px 14px; }
     .photos { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+    .cform { grid-template-columns: 1fr; }
+    .cform textarea { min-height: 76px; }
+    .slate { padding: 20px 16px 22px; }
+    .cmsgs { grid-template-columns: 1fr; gap: 12px; }
   }
 </style>
 </head>
@@ -148,6 +210,7 @@
       <button type="button" data-v="month" aria-pressed="false">Month view</button>
     </div>
     <div id="cal-list" class="upcoming"><p class="center">Loading the calendar…</p></div>
+    <div id="cal-bdays" class="bdays card" style="margin-top:14px" hidden></div>
     <div id="cal-month" class="month card" hidden></div>
 
     <div class="bday well" id="birthdays">
@@ -187,8 +250,27 @@
   <section class="videos" id="videos"></section>
 
   <div class="ribbon" id="photos"><h2>Family Photos</h2></div>
-  <p class="sub">Tap any photo to see it bigger. Have one to add? Text it to Cat.</p>
+  <p class="sub">Tap any photo to see it bigger. Have some to add? <a href="#upload">Upload them below.</a></p>
   <section class="photos" id="photo-grid"><p class="center" style="grid-column:1/-1">Loading photos…</p></section>
+
+  <div class="ribbon" id="upload"><h2>Upload Your Pics &amp; Videos Here</h2></div>
+  <p class="sub">Got pictures or movies from a family get-together? Add them here so everyone can enjoy them.</p>
+  <section class="upload">
+    <div class="up card">
+      <h3>Photos</h3>
+      <p>Pick as many as you like. They show up in Family Photos right away.</p>
+      <label class="f">Your name (so we know who to thank)<input type="text" id="upwho" maxlength="40" autocomplete="name" placeholder="Aunt Missy"></label>
+      <label class="btn red" for="upfiles">Choose photos<input type="file" id="upfiles" accept="image/*" multiple></label>
+      <input type="text" id="upweb" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px">
+      <p class="status" id="upstatus" role="status" aria-live="polite"></p>
+      <div class="thumbs" id="upthumbs"></div>
+    </div>
+    <div class="up well" id="vidup" hidden>
+      <h3 class="goldtext">Videos</h3>
+      <p>Movies are too big for the site itself, so they go straight to Cat. Any size, no account needed. The best ones end up in Family Movies.</p>
+      <a class="btn goldfill" id="vidlink" href="#" target="_blank" rel="noopener">Upload videos →</a>
+    </div>
+  </section>
 
   <dialog class="lb" id="lb" aria-label="Photo">
     <img id="lbimg" src="" alt="">
@@ -198,6 +280,23 @@
       <button class="btn ghost" id="lbnext" type="button">Next ›</button>
     </div>
   </dialog>
+
+  <div class="ribbon" id="chalkboard"><h2>The Family Chalkboard</h2></div>
+  <p class="sub">Thoughts, grievances, brags, shout-outs and whatever else is on your mind. Everyone with the link can see it.</p>
+  <section class="chalk">
+    <div class="slate">
+      <div class="chalk-title">Thoughts <span>&amp;</span> Grievances</div>
+      <div class="rule"></div>
+      <form class="cform" id="cform" novalidate>
+        <label>Your name<input type="text" id="cname" maxlength="60" autocomplete="name" placeholder="Cousin Will"></label>
+        <label>What’s on your mind?<textarea id="ctext" maxlength="600" rows="1" placeholder="Whoever took the last slice of pecan pie, we need to talk."></textarea></label>
+        <input type="text" id="cweb" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <button class="btn red" type="submit" id="csend">Chalk it up</button>
+      </form>
+      <p class="cmsg" id="cmsg" role="status" aria-live="polite"></p>
+      <div class="cmsgs" id="cmsgs"><p class="empty">Loading the chalkboard…</p></div>
+    </div>
+  </section>
 
   <section class="card dark heaven" id="heaven">
     <span class="twinkle" style="left:5%;top:20%"></span><span class="twinkle" style="left:93%;top:16%;animation-delay:1s"></span>
@@ -224,7 +323,7 @@
   const pad = n => ('0' + n).slice(-2);
   const toDate = iso => { const p = iso.split('-').map(Number); return new Date(p[0], p[1] - 1, p[2]); };
   const todayIso = () => { const d = new Date(); return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()); };
-  let CAL = [], PHOTOS = [];
+  let CAL = [], PHOTOS = [], BOARD = [];
 
   // ---------- photos
   const grid = document.getElementById('photo-grid');
@@ -280,10 +379,33 @@
     if (ev.type === 'Birthday') p.set('recur', 'RRULE:FREQ=YEARLY');
     return 'https://calendar.google.com/calendar/render?' + p.toString();
   }
+  // Birthdays get their own compact strip so the events list stays short.
+  const isBday = ev => ev.type === 'Birthday';
+  const bdayName = ev => String(ev.what).replace(/[’']s birthday$/i, '').trim();
+  let BSHOW = 12;
+  function renderBdays() {
+    const el = document.getElementById('cal-bdays');
+    const list = CAL.filter(isBday);
+    if (!list.length) { el.hidden = true; return; }
+    el.hidden = false;
+    const t = todayIso(), soon = new Date(); soon.setDate(soon.getDate() + 14);
+    const soonIso = soon.getFullYear() + '-' + pad(soon.getMonth() + 1) + '-' + pad(soon.getDate());
+    const shown = list.slice(0, BSHOW);
+    el.innerHTML = `<div class="top"><h3>Birthdays <span class="cake" aria-hidden="true">🎂</span></h3><p>${list.length} on the list · they stay on here every year · tap one to add it to your calendar</p></div>
+      <div class="bpills">${shown.map(ev => {
+        const d = toDate(ev.date);
+        return `<a class="bpill${ev.date <= soonIso && ev.date >= t ? ' nxt' : ''}" href="${gcal(ev)}" target="_blank" rel="noopener" title="Add ${esc(ev.what)} to my calendar"><span class="d">${MONTHS[d.getMonth()].slice(0, 3).toUpperCase()} ${d.getDate()}</span>${esc(bdayName(ev))}</a>`;
+      }).join('')}</div>
+      ${list.length > BSHOW ? `<button type="button" class="more" id="bmore">Show all ${list.length} birthdays</button>` : (list.length > 12 ? '<button type="button" class="more" id="bmore">Show fewer</button>' : '')}`;
+    const more = document.getElementById('bmore');
+    if (more) more.onclick = () => { BSHOW = BSHOW === 12 ? 999 : 12; renderBdays(); };
+  }
   function renderList() {
     const el = document.getElementById('cal-list');
-    if (!CAL.length) { el.innerHTML = '<p class="center">Nothing on the calendar yet.</p>'; return; }
-    el.innerHTML = CAL.slice(0, 8).map(ev => {
+    renderBdays();
+    const events = CAL.filter(ev => !isBday(ev));
+    if (!events.length) { el.innerHTML = '<p class="center">No get-togethers on the calendar yet.</p>'; return; }
+    el.innerHTML = events.slice(0, 8).map(ev => {
       const d = toDate(ev.date);
       const wk = d.toLocaleDateString(undefined, { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' });
       const link = ev.link ? `<a href="${esc(ev.link)}">Details →</a>` : '';
@@ -318,6 +440,7 @@
     const v = b.dataset.v;
     document.querySelectorAll('.tabs button').forEach(x => x.setAttribute('aria-pressed', String(x === b)));
     document.getElementById('cal-list').hidden = v !== 'list';
+    document.getElementById('cal-bdays').hidden = v !== 'list' || !CAL.some(isBday);
     document.getElementById('cal-month').hidden = v !== 'month';
     if (v === 'month') renderMonth();
   }));
@@ -329,14 +452,94 @@
       if (!j.ok) throw new Error();
       CAL = j.data.calendar || [];
       PHOTOS = j.data.photos || [];
-      renderList(); renderPhotos(); renderVideos(j.data.videos);
+      BOARD = j.data.board || [];
+      renderList(); renderPhotos(); renderVideos(j.data.videos); renderBoard();
       if (!document.getElementById('cal-month').hidden) renderMonth();
     } catch (e) {
       document.getElementById('cal-list').innerHTML = '<p class="center">The calendar didn’t load just now. Please refresh in a minute.</p>';
       grid.innerHTML = '<p class="center" style="grid-column:1/-1">Photos didn’t load just now. Please refresh in a minute.</p>';
+      document.getElementById('cmsgs').innerHTML = '<p class="empty">The chalkboard didn’t load just now. Please refresh in a minute.</p>';
     }
   }
   load();
+
+  // ---------- chalkboard
+  const when = iso => { const d = new Date(iso); return isNaN(d) ? '' : d.toLocaleDateString(undefined, { month: 'short', day: 'numeric' }); };
+  function renderBoard() {
+    const box = document.getElementById('cmsgs');
+    box.innerHTML = BOARD.length
+      ? BOARD.map(m => `<div class="note"><span class="who">${esc(m.name)}</span><span class="when">${esc(when(m.when))}</span><div class="txt">${esc(m.text)}</div></div>`).join('')
+      : '<p class="empty">Nothing on the board yet. Chalk something up!</p>';
+  }
+  const cn = document.getElementById('cname'), ct = document.getElementById('ctext');
+  try { cn.value = localStorage.getItem('ff-name') || ''; } catch (e) {}
+  ct.addEventListener('input', () => { ct.style.height = 'auto'; ct.style.height = Math.min(220, ct.scrollHeight) + 'px'; });
+  document.getElementById('cform').addEventListener('submit', async e => {
+    e.preventDefault();
+    const msg = document.getElementById('cmsg'), btn = document.getElementById('csend');
+    const name = cn.value.trim(), text = ct.value.trim();
+    if (!name || !text) { msg.textContent = 'Please add your name and what’s on your mind.'; return; }
+    btn.disabled = true; btn.textContent = 'Chalking…'; msg.textContent = '';
+    try {
+      const j = await (await fetch(API, { method: 'POST', body: JSON.stringify({ kind: 'chalk', name: name, text: text, website: document.getElementById('cweb').value }) })).json();
+      if (!j.ok) throw new Error(j.error || 'That didn’t go through.');
+      BOARD = (j.data && j.data.board) || BOARD; renderBoard();
+      try { localStorage.setItem('ff-name', name); } catch (x) {}
+      ct.value = ''; ct.style.height = '';
+      msg.textContent = '✏️ It’s on the board.';
+    } catch (ex) {
+      msg.textContent = (ex && ex.message) || 'That didn’t go through. Please try again.';
+    }
+    btn.disabled = false; btn.textContent = 'Chalk it up';
+  });
+
+  // ---------- photo uploads (videos go to the link in config.js)
+  if (window.FF && window.FF.videoUpload) { document.getElementById('vidlink').href = window.FF.videoUpload; document.getElementById('vidup').hidden = false; }
+  const upwho = document.getElementById('upwho');
+  try { upwho.value = localStorage.getItem('ff-name') || ''; } catch (e) {}
+  // Shrinks a picture to at most 2000px on the long side and makes it a JPEG, so uploads are quick.
+  function shrink(file) {
+    return new Promise(resolve => {
+      const url = URL.createObjectURL(file), img = new Image();
+      const done = r => { URL.revokeObjectURL(url); resolve(r); };
+      img.onload = () => {
+        const k = Math.min(1, 2000 / Math.max(img.naturalWidth, img.naturalHeight));
+        const c = document.createElement('canvas');
+        c.width = Math.round(img.naturalWidth * k); c.height = Math.round(img.naturalHeight * k);
+        c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
+        c.toBlob(b => done(b ? { blob: b, type: 'image/jpeg' } : null), 'image/jpeg', 0.86);
+      };
+      img.onerror = () => done(null);
+      img.src = url;
+    });
+  }
+  const b64 = blob => new Promise((res, rej) => { const r = new FileReader(); r.onload = () => res(String(r.result).split(',')[1]); r.onerror = rej; r.readAsDataURL(blob); });
+  document.getElementById('upfiles').addEventListener('change', async e => {
+    const files = [...e.target.files]; e.target.value = '';
+    if (!files.length) return;
+    const st = document.getElementById('upstatus'), th = document.getElementById('upthumbs');
+    const who = upwho.value.trim();
+    try { if (who) localStorage.setItem('ff-name', who); } catch (x) {}
+    st.className = 'status'; let okCount = 0, failed = [];
+    for (let i = 0; i < files.length; i++) {
+      const f = files[i];
+      st.textContent = 'Uploading ' + (i + 1) + ' of ' + files.length + '…';
+      try {
+        let pic = await shrink(f);
+        if (!pic) { if (f.size > 8 * 1024 * 1024) throw new Error('too big'); pic = { blob: f, type: f.type || 'image/jpeg' }; }
+        const j = await (await fetch(API, { method: 'POST', body: JSON.stringify({ kind: 'famphoto', type: pic.type, data: await b64(pic.blob), who: who, website: document.getElementById('upweb').value }) })).json();
+        if (!j.ok || !j.id) throw new Error(j.error || 'failed');
+        okCount++;
+        const p = { sm: 'https://lh3.googleusercontent.com/d/' + j.id + '=w600', lg: 'https://lh3.googleusercontent.com/d/' + j.id + '=w1800' };
+        PHOTOS.push(p);
+        th.insertAdjacentHTML('beforeend', `<img src="${URL.createObjectURL(pic.blob)}" alt="">`);
+      } catch (ex) { failed.push(f.name); }
+    }
+    renderPhotos();
+    if (failed.length && !okCount) { st.className = 'status bad'; st.textContent = 'Those didn’t go through. Please try again, or text them to Cat.'; }
+    else if (failed.length) { st.className = 'status ok'; st.textContent = '🎉 ' + okCount + ' added! ' + failed.length + ' didn’t go through. Please try those again.'; }
+    else { st.className = 'status ok'; st.textContent = '🎉 ' + okCount + (okCount === 1 ? ' photo' : ' photos') + ' added! Scroll up to see ' + (okCount === 1 ? 'it' : 'them') + ' in Family Photos.'; }
+  });
 
   // ---------- birthday form
   const bm = document.getElementById('bmonth'), bd = document.getElementById('bday');

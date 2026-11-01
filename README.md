@@ -2,7 +2,7 @@
 
 The family website: farnsworthfamilies.com
 
-- `index.html`: family home page (events, Farnsworths in Heaven)
+- `index.html`: family home page (calendar, birthdays, movies, photos, photo/video uploads, the Family Chalkboard, Farnsworths in Heaven)
 - `thanksgiving/`: Thanksgiving 2026 RSVP page and slideshow
 - Family photos live in Cat's Google Drive folder "Farnsworth Website Photos (drop photos here)" and the movie list lives in the backend, so neither is stored in this repo.
 - `assets/`: shared look (black, gold and red) and the logo and settings
