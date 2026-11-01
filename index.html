@@ -255,7 +255,7 @@
       <div class="screen"><button type="button" data-i="${i}" aria-label="Play ${esc(v.title)}"><span class="play"></span></button></div>
       <h3 class="goldtext">${esc(v.title)}</h3><p id="vd${i}"></p></article>`).join('');
     list.forEach((v, i) => {
-      const page = 'https://vimeo.com/' + v.id + '/' + v.h;
+      const page = 'https://vimeo.com/' + v.id + (v.h ? '/' + v.h : '');
       fetch('https://vimeo.com/api/oembed.json?width=960&url=' + encodeURIComponent(page)).then(r => r.json()).then(o => {
         const b = el.querySelector(`button[data-i="${i}"]`);
         if (b && o.thumbnail_url) b.style.backgroundImage = `url("${o.thumbnail_url}")`;
@@ -266,7 +266,7 @@
       const b = e.target.closest('.screen button'); if (!b) return;
       const v = list[+b.dataset.i];
       const f = document.createElement('iframe');
-      f.src = 'https://player.vimeo.com/video/' + encodeURIComponent(v.id) + '?h=' + encodeURIComponent(v.h) + '&autoplay=1';
+      f.src = 'https://player.vimeo.com/video/' + encodeURIComponent(v.id) + '?' + (v.h ? 'h=' + encodeURIComponent(v.h) + '&' : '') + 'autoplay=1';
       f.allow = 'autoplay; fullscreen; picture-in-picture'; f.allowFullscreen = true; f.title = v.title;
       b.replaceWith(f);
     });
