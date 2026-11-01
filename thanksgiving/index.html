@@ -37,6 +37,17 @@
   .chip.todo { background: var(--redgrad); color: #fff; }
 
   .slide-img { width: 100%; aspect-ratio: 16/9; object-fit: cover; background: var(--gold-soft); }
+  .cover { position: relative; display: block; text-decoration: none; }
+  .cover .watch { position: absolute; right: 4%; bottom: 7%; display: inline-flex; align-items: center; gap: 12px;
+    padding: 12px 22px 12px 14px; border-radius: 999px; border: 3px solid transparent;
+    background: var(--redgrad) padding-box, var(--metal) border-box; color: #fff; font-weight: 800; font-size: clamp(15px, 2.4vw, 21px); white-space: nowrap;
+    box-shadow: 0 10px 24px rgba(0,0,0,.4); text-shadow: 0 1px 0 rgba(90,0,10,.5); animation: ff-pulse 2.4s ease-in-out infinite; }
+  .cover .tri { width: 34px; height: 34px; border-radius: 50%; background: #fff; display: grid; place-items: center; flex: none; }
+  .cover .tri::after { content: ''; margin-left: 4px; border-style: solid; border-width: 8px 0 8px 13px; border-color: transparent transparent transparent var(--red); }
+  .cover:hover .watch { filter: brightness(1.1); }
+  @keyframes ff-pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+  @media (prefers-reduced-motion: reduce) { .cover .watch { animation: none; } }
+  @media (max-width: 520px) { .cover .watch { right: 50%; transform: translateX(50%); bottom: 5%; padding: 8px 14px 8px 8px; animation: none; } .cover .tri { width: 26px; height: 26px; } }
   .slide-btn { padding: 0; border: 0; background: none; cursor: zoom-in; width: 100%; }
 
   .q { font-weight: 800; font-size: 21px; margin: 0 0 10px; }
@@ -190,7 +201,7 @@
     app.innerHTML = `
       <p class="back"><a class="btn ghost" href="../">← All family events</a></p>
       <section class="hero">
-        ${cover ? `<div class="frame"><img class="slide-img" src="${esc(cover.img)}" alt="Farnsworth Family Thanksgiving 2026"></div>`
+        ${cover ? `<a class="frame cover" href="?show=0" aria-label="Watch the slideshow"><img class="slide-img" src="${esc(cover.img)}" alt="Farnsworth Family Thanksgiving 2026"><span class="watch"><span class="tri"></span>Watch the slideshow</span></a>`
                 : `<h1 class="center">Thanksgiving 2026</h1>`}
         <div class="card when">
           <div class="big">${esc(ev.date)} · ${esc(ev.time)}</div>
