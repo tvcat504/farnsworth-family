@@ -217,7 +217,8 @@
 (function () {
   'use strict';
   const API = (window.FF && window.FF.api) || '';
-  if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) { const v = document.getElementById('tgvid'); if (v) { v.removeAttribute('autoplay'); v.pause(); } }
+  const tgv = document.getElementById('tgvid');
+  if (tgv) { if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) { tgv.removeAttribute('autoplay'); tgv.pause(); } else { tgv.muted = true; const p = tgv.play(); if (p && p.catch) p.catch(() => {}); } }
   const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
   const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
   const pad = n => ('0' + n).slice(-2);
