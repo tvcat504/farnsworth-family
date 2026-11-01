@@ -215,9 +215,8 @@
           <div class="big">${esc(ev.date)} · ${esc(ev.time)}</div>
           <div>${ev.address ? `<b>${esc(ev.place)}:</b> <a href="https://maps.google.com/?q=${encodeURIComponent(ev.address)}" target="_blank" rel="noopener">${esc(ev.address)}</a>` : `<b>Where:</b> ${esc(ev.place)}. Cat will post it here as soon as it’s set.`}</div>
           ${ev.extra ? `<div class="elephant"><span class="e" aria-hidden="true">🎁</span><span>${esc(ev.extra)}</span></div>` : ''}
-          <div class="row">
+          <div class="row" style="justify-content:center">
             <a class="btn ghost" href="${calLink(ev)}" target="_blank" rel="noopener">📅 Add to my calendar</a>
-            <a class="btn ghost" href="?show=0">🎬 Watch the slideshow</a>
           </div>
         </div>
         <div class="tally" aria-label="RSVP count so far">
