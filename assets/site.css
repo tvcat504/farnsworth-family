@@ -1,19 +1,30 @@
-/* Farnsworth Families — shared look. Black, gold and red. */
+/* Farnsworth Families — shared look. Black, metallic gold and a pop of red, taken from the badge. */
 :root {
   --black: #1A1818;
   --black-deep: #0E0D0D;
   --gold: #E3BF79;
+  --gold-hi: #F8E4AE;
   --gold-mid: #AE8243;
   --gold-dark: #9F743E;
+  --gold-deep: #6E4E22;
   --gold-soft: #EFDCB0;
   --pale: #F7EBD0;
   --cream: #FFFDF7;
   --red: #DD001B;
+  --red-deep: #A80015;
   --ink: #1A1818;
-  --ink-soft: #4A3F35;
+  --ink-soft: #33281F;
   --ok: #2f6b3a;
   --radius: 22px;
-  --shadow: 0 10px 30px rgba(26, 24, 24, .16);
+  --shadow: 0 12px 32px rgba(26, 24, 24, .22);
+
+  /* The badge's materials */
+  --metal: linear-gradient(135deg, #F8E4AE 0%, #E3BF79 22%, #9F743E 50%, #D8B480 72%, #6E4E22 100%);
+  --metal-soft: linear-gradient(135deg, #F8E4AE 0%, #E3BF79 40%, #B98C49 100%);
+  --well: radial-gradient(ellipse 120% 90% at 50% 25%, #2E2929 0%, #151313 55%, #070606 100%);
+  --redgrad: linear-gradient(180deg, #F4324B 0%, #DD001B 48%, #A80015 100%);
+  --paper: linear-gradient(180deg, #FFFBF0 0%, #F7EBD0 100%);
+
   --serif: 'Playfair Display', Georgia, serif;
   --display: 'Cinzel', Georgia, serif;
   --sans: 'Montserrat', Arial, sans-serif;
@@ -21,16 +32,25 @@
 }
 
 * { box-sizing: border-box; }
-html { -webkit-text-size-adjust: 100%; }
+html { -webkit-text-size-adjust: 100%; background: var(--black); }
 body {
   margin: 0;
-  background: var(--gold);
   color: var(--ink);
   font-family: var(--sans);
   font-size: 19px;
   line-height: 1.5;
   min-height: 100vh;
   border: 10px solid var(--black);
+  box-shadow: inset 0 0 0 2px var(--gold-mid);
+  background-color: #C99A52;
+  background-image:
+    url("texture.svg"),
+    repeating-linear-gradient(115deg, rgba(255, 244, 214, .05) 0 2px, transparent 2px 11px),
+    radial-gradient(ellipse 90% 55% at 50% 0%, rgba(248, 228, 174, .95) 0%, rgba(227, 191, 121, 0) 70%),
+    radial-gradient(ellipse 70% 60% at 0% 100%, rgba(94, 66, 25, .55) 0%, rgba(94, 66, 25, 0) 70%),
+    radial-gradient(ellipse 60% 55% at 100% 55%, rgba(110, 78, 34, .45) 0%, rgba(110, 78, 34, 0) 70%),
+    linear-gradient(165deg, #E3BF79 0%, #D4AA62 35%, #B98C49 70%, #9F743E 100%);
+  background-attachment: fixed;
 }
 img { max-width: 100%; display: block; }
 a { color: var(--black); }
@@ -46,62 +66,114 @@ h1 { font-size: clamp(34px, 6vw, 54px); }
 h2 { font-size: clamp(27px, 4.4vw, 38px); }
 h3 { font-size: 25px; }
 
+/* Gold text like the F in the badge */
+.goldtext {
+  background: linear-gradient(180deg, #FAE8B6 0%, #E3BF79 40%, #AE8243 75%, #D8B480 100%);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+
 /* The logo lockup */
-.brand { display: flex; flex-direction: column; align-items: center; gap: 14px; text-decoration: none; color: var(--black); padding: 10px 0 22px; }
-.brand img { width: 104px; height: 104px; filter: drop-shadow(0 6px 10px rgba(26,24,24,.35)) drop-shadow(0 2px 2px rgba(26,24,24,.25)); }
+.brand { display: flex; flex-direction: column; align-items: center; gap: 14px; text-decoration: none; color: var(--black); padding: 10px 0 22px; position: relative; }
+.brand img { width: 104px; height: 104px; filter: drop-shadow(0 8px 14px rgba(26,24,24,.4)) drop-shadow(0 2px 2px rgba(26,24,24,.3)); }
 .brand .words { display: flex; flex-direction: column; align-items: center; gap: 8px; }
-.brand .wm { font-family: var(--display); font-weight: 700; font-size: clamp(36px, 8vw, 62px); line-height: 1; letter-spacing: .06em; padding-left: .06em; }
+.brand .wm { font-family: var(--display); font-weight: 700; font-size: clamp(36px, 8vw, 62px); line-height: 1; letter-spacing: .06em; padding-left: .06em; text-shadow: 0 1px 0 rgba(255, 240, 200, .55), 0 3px 8px rgba(70, 45, 10, .25); }
 .brand .tag { display: flex; align-items: center; gap: 12px; font-weight: 700; font-size: clamp(12px, 2.4vw, 15px); letter-spacing: .36em; padding-left: .36em; }
 .brand .tag::before, .brand .tag::after { content: ''; width: clamp(28px, 7vw, 64px); height: 2px; background: var(--red); }
 .brand .dia { width: 8px; height: 8px; background: var(--red); transform: rotate(45deg); flex: none; }
-.brand.small { flex-direction: row; gap: 12px; padding: 6px 0 16px; }
-.brand.small img { width: 56px; height: 56px; }
-.brand.small .words { align-items: flex-start; gap: 4px; }
-.brand.small .wm { font-size: clamp(22px, 5vw, 30px); }
-.brand.small .tag { font-size: 11px; gap: 8px; }
-.brand.small .tag::before { display: none; }
-.brand.small .tag::after { width: 36px; }
+
+/* Red banner for section titles, like the crest ribbon */
+.ribbon { display: flex; justify-content: center; margin: 50px 0 18px; position: relative; z-index: 0; }
+.ribbon h2 {
+  position: relative; display: inline-block; padding: 10px 34px 12px;
+  background: var(--redgrad); color: #fff; font-size: clamp(25px, 4vw, 34px);
+  border-top: 2px solid var(--gold); border-bottom: 2px solid var(--gold);
+  box-shadow: 0 8px 18px rgba(80, 0, 10, .3);
+  text-shadow: 0 2px 0 rgba(90, 0, 10, .45);
+}
+.ribbon h2::before, .ribbon h2::after {
+  content: ''; position: absolute; top: 12px; bottom: -12px; width: 34px; z-index: -1;
+  background: linear-gradient(180deg, #B4001A, #7A0010);
+}
+.ribbon h2::before { left: -24px; clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%, 36% 50%); }
+.ribbon h2::after { right: -24px; clip-path: polygon(0 0, 100% 0, 64% 50%, 100% 100%, 0 100%); }
+.ribbon + .sub { text-align: center; margin: -4px auto 18px; max-width: 640px; font-weight: 600; }
 
 .pill {
   display: inline-block; background: var(--black); color: var(--gold);
   font-weight: 700; border-radius: 999px; padding: 8px 18px; font-size: 17px;
 }
 
+/* Cards: paper inside a metallic gold frame */
 .card {
-  background: var(--pale); border: 3px solid var(--black); border-radius: var(--radius);
+  background: var(--paper) padding-box, var(--metal) border-box;
+  border: 3px solid transparent; border-radius: var(--radius);
   padding: 22px; box-shadow: var(--shadow);
 }
-.card.dark { background: var(--black); color: var(--pale); border-color: var(--black); }
-.card.dark h2, .card.dark h3 { color: var(--gold); }
+.card.dark, .well {
+  background: var(--well) padding-box, var(--metal) border-box;
+  border: 3px solid transparent; color: var(--pale);
+}
+.card.dark h2, .card.dark h3, .well h2, .well h3 { color: var(--gold); }
 
 .btn {
   display: inline-flex; align-items: center; justify-content: center; gap: 10px;
-  min-height: 60px; padding: 14px 26px; border-radius: 999px; border: 3px solid var(--black);
-  background: var(--black); color: var(--gold); font-weight: 700; font-size: 19px;
+  min-height: 60px; padding: 14px 26px; border-radius: 999px;
+  border: 3px solid transparent;
+  background: var(--well) padding-box, var(--metal) border-box;
+  color: var(--gold); font-weight: 700; font-size: 19px;
   text-decoration: none; cursor: pointer; text-align: center;
-  transition: transform .08s ease, background .15s ease;
+  box-shadow: 0 6px 14px rgba(26, 24, 24, .25);
+  transition: transform .08s ease, filter .15s ease, box-shadow .15s ease;
 }
-.btn:hover { background: var(--black-deep); }
+.btn:hover { filter: brightness(1.12); box-shadow: 0 8px 20px rgba(26, 24, 24, .3); }
 .btn:active { transform: scale(.98); }
-.btn.ghost { background: var(--pale); color: var(--black); }
-.btn.ghost:hover { background: var(--cream); }
+.btn.ghost { background: var(--paper) padding-box, var(--metal) border-box; color: var(--black); }
+.btn.red { background: var(--redgrad) padding-box, var(--metal) border-box; color: #fff; text-shadow: 0 1px 0 rgba(90, 0, 10, .5); box-shadow: 0 8px 20px rgba(160, 0, 20, .35); }
+.btn.goldfill { background: var(--metal-soft) padding-box, var(--metal) border-box; color: var(--black); }
 .btn.block { width: 100%; }
-.btn:focus-visible, button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visible {
+.btn[disabled] { filter: grayscale(.4) brightness(.9); cursor: wait; }
+.btn:focus-visible, button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible {
   outline: 4px solid var(--red); outline-offset: 3px;
 }
 
-.frame { border: 6px solid var(--black); border-radius: var(--radius); overflow: hidden; background: var(--black); box-shadow: var(--shadow); }
+.frame {
+  border: 5px solid transparent; border-radius: var(--radius); overflow: hidden;
+  background: linear-gradient(var(--black), var(--black)) padding-box, var(--metal) border-box; box-shadow: var(--shadow);
+}
 
 .muted { color: var(--ink-soft); }
 .center { text-align: center; }
 .stack > * + * { margin-top: 16px; }
 .row { display: flex; gap: 14px; flex-wrap: wrap; }
 
-.foot { text-align: center; margin-top: 40px; font-size: 16px; color: var(--ink-soft); }
+.foot { text-align: center; margin-top: 46px; font-size: 16px; color: var(--ink); display: grid; justify-items: center; gap: 10px; }
+.foot img { width: 44px; height: 44px; }
 .foot a { font-weight: 700; }
 
 @media (max-width: 600px) {
-  body { border-width: 6px; font-size: 18px; }
+  body { border-width: 6px; font-size: 18px; background-attachment: scroll; }
   .card { padding: 18px; }
   .brand img { width: 88px; height: 88px; }
+  .ribbon h2 { padding: 8px 22px 10px; }
+  .ribbon h2::before { left: -18px; width: 26px; }
+  .ribbon h2::after { right: -18px; width: 26px; }
+}
+
+/* Gentle motion for the fun art. Off for anyone who asks their device for less motion. */
+@keyframes ff-bob { 0%, 100% { transform: translateY(0) rotate(-1.5deg); } 50% { transform: translateY(-8px) rotate(1.5deg); } }
+@keyframes ff-wiggle { 0%, 100% { transform: rotate(0); } 25% { transform: rotate(-2.5deg); } 75% { transform: rotate(2.5deg); } }
+@keyframes ff-bounce { 0%, 100% { transform: translateY(0) scale(1); } 40% { transform: translateY(-10px) scale(1.02); } 60% { transform: translateY(0) scale(.99); } }
+@keyframes ff-sheen { 0%, 70% { transform: translateX(-120%) skewX(-20deg); } 100% { transform: translateX(220%) skewX(-20deg); } }
+@keyframes ff-twinkle { 0%, 100% { opacity: .25; transform: scale(.8); } 50% { opacity: 1; transform: scale(1.15); } }
+.anim-bob { animation: ff-bob 3.4s ease-in-out infinite; }
+.anim-wiggle { animation: ff-wiggle 2.6s ease-in-out infinite; }
+.anim-bounce { animation: ff-bounce 2.2s ease-in-out infinite; }
+.sheen { position: relative; overflow: hidden; }
+.sheen::after {
+  content: ''; position: absolute; inset: 0; width: 40%; pointer-events: none;
+  background: linear-gradient(90deg, transparent, rgba(255, 245, 215, .22), transparent);
+  animation: ff-sheen 6s ease-in-out infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .anim-bob, .anim-wiggle, .anim-bounce, .sheen::after, .twinkle { animation: none !important; }
 }

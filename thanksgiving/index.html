@@ -18,15 +18,15 @@
   .when { display: grid; gap: 12px; }
   .when .big { font-family: var(--serif); font-size: clamp(26px, 4.4vw, 36px); color: var(--black); font-weight: 900; line-height: 1.15; }
   .tally { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px; }
-  .tally div { background: var(--black); color: var(--pale); border-radius: 16px; padding: 12px; text-align: center; }
+  .tally div { background: var(--well) padding-box, var(--metal) border-box; border: 3px solid transparent; color: var(--pale); border-radius: 16px; padding: 12px; text-align: center; }
   .tally b { display: block; font-family: var(--serif); font-size: 38px; color: var(--gold); line-height: 1; }
   .tally span { font-size: 15px; }
 
   .fam-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 12px; }
   .fam {
     display: flex; flex-direction: column; align-items: flex-start; gap: 6px; text-align: left;
-    background: var(--cream); border: 3px solid var(--black); border-radius: 18px; padding: 16px 18px;
-    cursor: pointer; min-height: 84px; color: var(--ink);
+    background: var(--paper) padding-box, var(--metal) border-box; border: 3px solid transparent; border-radius: 18px; padding: 16px 18px;
+    box-shadow: 0 6px 14px rgba(26,24,24,.18); cursor: pointer; min-height: 84px; color: var(--ink);
   }
   .fam:hover { background: #fff; }
   .fam .nm { font-family: var(--serif); font-size: 24px; font-weight: 700; color: var(--black); line-height: 1.1; }
@@ -34,7 +34,7 @@
   .chip.yes { background: var(--ok); color: #fff; }
   .chip.maybe { background: var(--gold); color: var(--ink); }
   .chip.no { background: #8b8b8b; color: #fff; }
-  .chip.todo { background: var(--black); color: var(--gold); }
+  .chip.todo { background: var(--redgrad); color: #fff; }
 
   .slide-img { width: 100%; aspect-ratio: 16/9; object-fit: cover; background: var(--gold-soft); }
   .slide-btn { padding: 0; border: 0; background: none; cursor: zoom-in; width: 100%; }
@@ -46,9 +46,9 @@
     min-height: 68px; border-radius: 18px; border: 3px solid var(--black); background: var(--cream);
     color: var(--black); font-weight: 800; font-size: 20px; cursor: pointer; padding: 8px;
   }
-  .choice[aria-pressed="true"] { background: var(--black); color: var(--gold); }
+  .choice[aria-pressed="true"] { background: var(--redgrad); color: #fff; border-color: var(--red-deep); }
   .counts { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-  .counter { background: var(--cream); border: 3px solid var(--black); border-radius: 18px; padding: 12px; text-align: center; }
+  .counter { background: var(--paper) padding-box, var(--metal) border-box; border: 3px solid transparent; border-radius: 18px; padding: 12px; text-align: center; }
   .counter .lbl { font-weight: 800; }
   .counter .ctl { display: flex; align-items: center; justify-content: center; gap: 14px; margin-top: 6px; }
   .counter button {
@@ -298,7 +298,7 @@
         </label>
 
         <div id="err" class="err" hidden></div>
-        <button class="btn block" id="send" type="submit" style="min-height:72px;font-size:23px">Send my RSVP</button>
+        <button class="btn red block" id="send" type="submit" style="min-height:72px;font-size:23px">Send my RSVP</button>
         <p class="center muted" style="font-size:16px;margin-top:8px">Stuck? Call or text Cat at <a href="tel:+15044167032">${esc(DATA.event.phone)}</a>.</p>
       </form>`;
 
@@ -361,9 +361,9 @@
         <div class="nav">
           <button class="btn ghost" id="prev" aria-label="Previous slide">‹ Prev</button>
           <div class="count" id="cnt">${SHOW_I + 1} of ${s.length}</div>
-          <button class="btn" id="next" aria-label="Next slide">Next ›</button>
+          <button class="btn red" id="next" aria-label="Next slide">Next ›</button>
         </div>
-        <p class="center" id="rsvpwrap" style="margin-top:14px" hidden><button class="btn" id="rsvp"></button></p>
+        <p class="center" id="rsvpwrap" style="margin-top:14px" hidden><button class="btn red" id="rsvp"></button></p>
         <p class="center muted" style="font-size:16px">Tip: swipe, or use the arrow keys.</p>
       </div>`;
     const img = document.getElementById('simg');
